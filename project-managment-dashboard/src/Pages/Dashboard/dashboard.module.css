@@ -1,0 +1,170 @@
+:root {
+  --bg: #e0e5ec;
+  --shadow-light: #ffffff;
+  --shadow-dark: #a3b1c6;
+  --primary: #4a6fa5;
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+  background: var(--bg);
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+}
+
+.sidebar {
+  width: 260px;
+  background: var(--bg);
+  padding: 2rem 1.5rem;
+  border-radius: 30px;
+  box-shadow: inset 4px 4px 10px var(--shadow-dark),
+    inset -4px -4px 10px var(--shadow-light);
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+  margin: 20px;
+}
+
+.profile {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  box-shadow: 4px 4px 10px var(--shadow-dark),
+    -4px -4px 10px var(--shadow-light);
+  margin-bottom: 1rem;
+}
+
+.nav button {
+  width: 100%;
+  margin: 0.4rem 0;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 12px;
+  background: var(--bg);
+  color: #333;
+  cursor: pointer;
+  box-shadow: 4px 4px 10px var(--shadow-dark),
+    -4px -4px 10px var(--shadow-light);
+  transition: all 0.2s ease;
+}
+
+.nav button:hover {
+  transform: translateY(-2px);
+}
+
+.nav .active {
+  background: var(--primary);
+  color: white;
+  font-weight: bold;
+  box-shadow: inset 2px 2px 6px rgba(0, 0, 0, 0.15),
+    inset -2px -2px 6px rgba(255, 255, 255, 0.5);
+}
+
+.main {
+  flex: 1;
+  padding: 2rem;
+}
+
+.overallData {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.card {
+  flex: 1 1 200px;
+  background: var(--bg);
+  padding: 1.2rem;
+  border-radius: 20px;
+  box-shadow: 8px 8px 16px var(--shadow-dark),
+    -8px -8px 16px var(--shadow-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.card span {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.charts {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.fanIncrease,
+.incomeStats {
+  flex: 1 1 300px;
+  background: var(--bg);
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 8px 8px 16px var(--shadow-dark),
+    -8px -8px 16px var(--shadow-light);
+}
+
+.barChart,
+.donutChart {
+  margin-top: 1rem;
+  background: var(--bg);
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  font-size: 1.2rem;
+  color: #888;
+  box-shadow: inset 4px 4px 10px var(--shadow-dark),
+    inset -4px -4px 10px var(--shadow-light);
+}
+
+.incomeInfo p {
+  margin: 0.4rem 0;
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.worksOverview {
+  background: var(--bg);
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 8px 8px 16px var(--shadow-dark),
+    -8px -8px 16px var(--shadow-light);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+.table th {
+  background: #dbe3ef;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.table tr {
+  background: var(--bg);
+  border-radius: 12px;
+  box-shadow: 4px 4px 8px var(--shadow-dark), -4px -4px 8px var(--shadow-light);
+  margin-bottom: 10px;
+}
