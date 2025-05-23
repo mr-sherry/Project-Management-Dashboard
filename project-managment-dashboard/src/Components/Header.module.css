@@ -1,0 +1,51 @@
+/* src/Components/Header.module.css */
+
+.navbar {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.2rem 2rem;
+  background: #e0e5ec;
+  border-radius: 20px;
+  box-shadow: 8px 8px 16px #bec4d0, -8px -8px 16px #ffffff;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.navLinks a {
+  margin: 0 1rem;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.authButtons {
+  display: flex;
+  gap: 1rem;
+}
+
+.login {
+  padding: 0.9rem 2rem;
+  border: none;
+  border-radius: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 5px 5px 10px #bec4d0, -5px -5px 10px #ffffff;
+  background: #e0e5ec;
+  color: #333;
+  transition: all 0.3s ease-in-out;
+}
+
+.login:hover {
+  transform: translateY(-2px);
+  box-shadow: inset 5px 5px 10px #bec4d0, inset -5px -5px 10px #ffffff;
+}
+a {
+  text-decoration: none;
+}

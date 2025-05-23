@@ -1,0 +1,102 @@
+.wrapper {
+  font-family: 'Segoe UI', sans-serif;
+  background: #e0e5ec;
+  min-height: 100vh;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+.board {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.column {
+  flex: 1;
+  background: #e0e5ec;
+  border-radius: 20px;
+  padding: 15px;
+  box-shadow: 8px 8px 16px #bec4d0, -8px -8px 16px #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 200px;
+}
+
+.column h2 {
+  font-size: 1.4rem;
+  color: #2b2b2b;
+  margin-bottom: 1rem;
+}
+
+.card {
+  background: #e0e5ec;
+  padding: 1rem;
+  border-radius: 15px;
+  box-shadow: inset 5px 5px 10px #bec4d0, inset -5px -5px 10px #ffffff;
+  font-weight: 500;
+  color: #333;
+  display: flex;
+
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #2b2b2b;
+}
+
+.card p {
+  /* margin: 0.3rem 0; */
+  font-size: 0.95rem;
+  color: #555;
+}
+.card:active {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+/* ===== Responsive Styling ===== */
+
+@media (max-width: 1024px) {
+  .board {
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .column {
+    width: 100%;
+    min-width: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .column h2 {
+    font-size: 1.2rem;
+  }
+
+  .card h3 {
+    font-size: 1rem;
+  }
+
+  .card p {
+    font-size: 0.9rem;
+  }
+
+  .board {
+    padding: 1rem 0.5rem;
+  }
+
+  .card {
+    padding: 0.8rem 1rem;
+  }
+}

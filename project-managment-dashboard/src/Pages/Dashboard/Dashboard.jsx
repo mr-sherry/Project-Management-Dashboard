@@ -1,7 +1,11 @@
 import React from "react";
 import styles from "./dashboard.module.css";
+import { NavLink } from "react-router-dom";
+import { useUser } from "../../context/UserContext";
 
 const Dashboard = () => {
+    const { projectList, users } = useUser()
+    console.log("🚀 ~ Dashboard ~ projectList:", projectList)
     return (
         <div className={styles.container}>
             <aside className={styles.sidebar}>
@@ -16,7 +20,10 @@ const Dashboard = () => {
                 </div>
                 <nav className={styles.nav}>
                     <button className={styles.active}>Overview</button>
-                    <button>Projects</button>
+                    <NavLink to={'/project-list'}>
+
+                        <button>Projects</button>
+                    </NavLink>
                     <button>Tasks</button>
                     <button>Team</button>
                     <button>Reports</button>
@@ -25,10 +32,10 @@ const Dashboard = () => {
 
             <main className={styles.main}>
                 <section className={styles.overallData}>
-                    <div className={styles.card}>Active Projects <span>12</span></div>
-                    <div className={styles.card}>Completed Tasks <span>340</span></div>
-                    <div className={styles.card}>Pending Tasks <span>58</span></div>
-                    <div className={styles.card}>Team Members <span>24</span></div>
+                    <div className={styles.card}>Active Projects <span>{projectList.inProgress.length}</span></div>
+                    <div className={styles.card}>Completed Projects <span>{projectList.completed.length}</span></div>
+                    <div className={styles.card}>Pending Projects <span>{projectList.pending.length}</span></div>
+                    <div className={styles.card}>Team Members <span>{users.length}</span></div>
                 </section>
 
                 <section className={styles.charts}>
