@@ -1,47 +1,68 @@
-/* src/Components/Header.module.css */
+/* Reset */
 * {
-  padding: 0;
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+a {
+  text-decoration: none;
+}
+
+/* Mobile-first base layout */
 .navbar {
-  position: relative;
-  z-index: 1;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.2rem 2rem;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  padding: 1.2rem 1.5rem;
   background: #e0e5ec;
-  /* border-radius: 20px; */
   box-shadow: 8px 8px 16px #bec4d0, -8px -8px 16px #ffffff;
+  width: 100%;
 }
 
 .logo {
   font-size: 1.5rem;
   font-weight: bold;
   color: #333;
+  width: 100%;
+  text-align: left;
+}
+
+.navLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  width: 100%;
 }
 
 .navLinks a {
-  margin: 0 1rem;
-  text-decoration: none;
   color: #333;
   font-weight: 500;
+  transition: color 0.2s;
+}
+
+.navLinks a:hover {
+  color: #ff4b4b;
 }
 
 .authButtons {
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 0.8rem;
+  width: 100%;
 }
 
 .login {
+  width: 100%;
   padding: 0.9rem 2rem;
   border: none;
   border-radius: 50px;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 5px 5px 10px #bec4d0, -5px -5px 10px #ffffff;
   background: #e0e5ec;
   color: #333;
+  box-shadow: 5px 5px 10px #bec4d0, -5px -5px 10px #ffffff;
   transition: all 0.3s ease-in-out;
 }
 
@@ -49,6 +70,54 @@
   transform: translateY(-2px);
   box-shadow: inset 5px 5px 10px #bec4d0, inset -5px -5px 10px #ffffff;
 }
-a {
-  text-decoration: none;
+
+/* Button (Sign Up) matches Login styling with red variant */
+.authButtons button {
+  width: 100%;
+  padding: 0.9rem 2rem;
+  border: none;
+  border-radius: 50px;
+  font-weight: bold;
+  cursor: pointer;
+  background: #ff4b4b;
+  color: #fff;
+  box-shadow: 5px 5px 15px #cc3d3d, -5px -5px 15px #ff5d5d;
+  transition: all 0.3s ease-in-out;
+}
+
+.authButtons button:hover {
+  transform: translateY(-2px);
+  box-shadow: inset 5px 5px 10px #cc3d3d, inset -5px -5px 10px #ff5d5d;
+}
+
+/* Desktop & Tablet layout */
+@media (min-width: 768px) {
+  .navbar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 2rem;
+  }
+
+  .logo {
+    width: auto;
+    text-align: left;
+  }
+
+  .navLinks {
+    flex-direction: row;
+    width: auto;
+    gap: 1.5rem;
+  }
+
+  .authButtons {
+    flex-direction: row;
+    width: auto;
+    gap: 1rem;
+  }
+
+  .login,
+  .authButtons button {
+    width: auto;
+  }
 }

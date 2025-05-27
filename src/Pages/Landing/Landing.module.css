@@ -1,14 +1,15 @@
+/* Base (Mobile First) */
 .wrapper {
   font-family: 'Segoe UI', sans-serif;
   background: #e0e5ec;
-  /* min-height: 100vh; */
   padding: 20px;
   display: flex;
   flex-direction: column;
   position: relative;
-  /* height: 100vh; */
   overflow: hidden;
+  min-height: 100vh;
 }
+
 .lottieBackground {
   position: absolute;
   top: 0;
@@ -20,17 +21,14 @@
   transform: scale(1.5) rotate(180deg);
   object-fit: cover;
 }
-/* .hero {
-  position: relative;
-  z-index: 1;
-} */
+
 .navbar {
   position: relative;
   z-index: 1;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.2rem 2rem;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 1rem;
   background: #e0e5ec;
   border-radius: 20px;
   box-shadow: 8px 8px 16px #bec4d0, -8px -8px 16px #ffffff;
@@ -42,8 +40,14 @@
   color: #333;
 }
 
+.navLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
 .navLinks a {
-  margin: 0 1rem;
   text-decoration: none;
   color: #333;
   font-weight: 500;
@@ -51,7 +55,9 @@
 
 .authButtons {
   display: flex;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
 }
 
 .login,
@@ -66,9 +72,11 @@
   color: #333;
   transition: all 0.3s ease-in-out;
 }
+
 .link {
   color: white;
 }
+
 .login:hover,
 .signup:hover,
 .cta:hover {
@@ -85,29 +93,32 @@
 .hero {
   flex: 1;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  padding-left: 50px;
-  padding-right: 50px;
-  padding-bottom: 100px;
-  padding-top: 62px;
+  justify-content: center;
+  padding: 2rem 1rem;
+  gap: 2rem;
   z-index: 1;
+  text-align: center;
 }
 
-.textSection h1 {
-  font-size: 3.5rem;
-  color: #2b2b2b;
-}
 .textSection {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 1.5rem;
 }
+
+.textSection h1 {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  color: #2b2b2b;
+}
+
 .visual {
-  width: 300px;
-  height: 300px;
+  width: 70vw;
+  max-width: 300px;
+  height: 70vw;
+  max-height: 300px;
   border-radius: 50%;
-  margin-right: 50px;
   background: #e0e5ec;
   box-shadow: inset 15px 15px 30px #bec4d0, inset -15px -15px 30px #ffffff;
   display: flex;
@@ -116,6 +127,7 @@
   overflow: hidden;
   position: relative;
 }
+
 .circleLottie {
   width: 100%;
   height: 100%;
@@ -123,6 +135,53 @@
   pointer-events: none;
   transform: scale(1.4);
 }
-/* .centerHead {
-  color: #cc3d3d;
-} */
+
+/* Tablet and Up */
+@media (min-width: 600px) {
+  .navbar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .navLinks {
+    flex-direction: row;
+    margin-top: 0;
+  }
+
+  .authButtons {
+    flex-direction: row;
+    margin-top: 0;
+  }
+
+  .hero {
+    flex-direction: row;
+    padding: 4rem 2rem;
+    text-align: left;
+  }
+
+  .textSection {
+    flex: 1;
+    align-items: flex-start;
+  }
+
+  .visual {
+    margin-right: 2rem;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .hero {
+    padding: 4rem 5rem;
+  }
+
+  .textSection h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  .visual {
+    width: 300px;
+    height: 300px;
+  }
+}
