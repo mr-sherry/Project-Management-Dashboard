@@ -13,13 +13,14 @@ const Header = () => {
     }
     return (
         <header className={styles.navbar}>
-            <NavLink className={styles.logo} to={'/landing'}>
+            <NavLink className={styles.logo} to={'/'}>
 
                 <div className={styles.logo}>🔷 ProjeX</div>
             </NavLink>
             <nav className={styles.navLinks}>
-                <NavLink to="/landing">Home</NavLink>
-                <NavLink to="/pricing">Pricing</NavLink>
+                <NavLink to="/">Home</NavLink>
+                {loggedUser && <NavLink to="/project-list">Projects</NavLink>}
+                {loggedUser && <NavLink to={'/dashboard'}>Dashboard</NavLink>}
             </nav>
             <div className={styles.authButtons}>
                 {loggedUser ?

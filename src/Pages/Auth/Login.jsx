@@ -8,13 +8,16 @@ const Login = () => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [submitted, setSubmitted] = useState(false);
-    const { login, loggedUser } = useUser();
+    const { login, loggedUser, users, projectList } = useUser();
+    console.log("🚀 ~ Login ~ users:", users)
+    console.log("🚀 ~ Login ~ projectList:", ...projectList)
 
     const navigate = useNavigate()
 
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("🚀 ~ Login ~ loggedUser:", loggedUser)
         login(email, password);
         setSubmitted(true)
     }
@@ -41,7 +44,9 @@ const Login = () => {
                     <form className={styles.form}>
                         <input onChange={(e) => setEmail(e.target.value)} type="email" placeholder="Email Address" required />
                         <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" required />
-                        <Button onClick={handleSubmit} type="submit">Login</Button>
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <Button onClick={handleSubmit} type="submit">Login</Button>
+                        </div>
                     </form>
                 </div>
             </main>

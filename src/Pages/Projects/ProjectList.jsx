@@ -1,22 +1,47 @@
 import React, { useEffect, useState } from "react";
 import styles from "./ProjectList.module.css";
-import { DragDropContext, Droppable, Draggable } from '@hello-pangea/dnd';
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { useUser } from "../../context/UserContext";
-
+import { useNavigate } from "react-router-dom";
 
 const ProjectList = () => {
-    const { projectList, projectsSort } = useUser()
-    const [projects, setProjects] = useState(projectList);
-    console.log("🚀 ~ ProjectList ~ projects:", projects)
+    const { userId, projectList, projectsSort, loggedUser } = useUser();
+    const navigate = useNavigate();
+
+    const [projects, setProjects] = useState({
+        userIds: '',
+        pending: [],
+        inProgress: [],
+        completed: []
+    });
+    useEffect(() => {
+        if (!loggedUser) {
+            alert('login Please')
+            navigate('/login')
+        }
+    }, [])
+
+    // Navigate to ProjectDetails with correct path
+    const handleClick = (projectId) => {
+        navigate(`/project-details/${projectId}`);
+    };
+
+    useEffect(() => {
+        const currentUserProjects = projectList.find(user => user.userIds === userId);
+        if (currentUserProjects) {
+            setProjects({
+                userIds: currentUserProjects.userIds,
+                pending: currentUserProjects.pending,
+                inProgress: currentUserProjects.inProgress,
+                completed: currentUserProjects.completed
+            });
+        }
+    }, [projectList, userId]);
 
     const handleDragEnd = (result) => {
         const { source, destination } = result;
-
         if (!destination) return;
-        if (
-            source.droppableId === destination.droppableId &&
-            source.index === destination.index
-        ) return;
+        if (source.droppableId === destination.droppableId && source.index === destination.index) return;
 
         const sourceList = [...projects[source.droppableId]];
         const [movedItem] = sourceList.splice(source.index, 1);
@@ -24,15 +49,22 @@ const ProjectList = () => {
         const destinationList = [...projects[destination.droppableId]];
         destinationList.splice(destination.index, 0, movedItem);
 
-        setProjects({
+        const updatedProjects = {
             ...projects,
             [source.droppableId]: sourceList,
             [destination.droppableId]: destinationList
-        });
+        };
+
+        setProjects(updatedProjects);
+        projectsSort(userId, updatedProjects);
     };
-    useEffect(() => {
-        projectsSort(projects)
-    }, [projects])
+
+    const statusLabels = {
+        pending: "🕓 Pending",
+        inProgress: "🚧 In Progress",
+        completed: "✅ Completed"
+    };
+
     return (
         <div className={styles.wrapper}>
             <DragDropContext onDragEnd={handleDragEnd}>
@@ -46,18 +78,17 @@ const ProjectList = () => {
                                     {...provided.droppableProps}
                                 >
                                     <h2>
-                                        {statusKey === "pending" && "🕓 Pending"}
-                                        {statusKey === "inProgress" && "🚧 In Progress"}
-                                        {statusKey === "completed" && "✅ Completed"}
+                                        {statusLabels[statusKey]} ({projects[statusKey]?.length || 0})
                                     </h2>
-                                    {projects[statusKey].map((project, index) => (
+                                    {projects[statusKey]?.map((project, index) => (
                                         <Draggable
-                                            key={project.id}
-                                            draggableId={project.id}
+                                            key={String(project.id)}
+                                            draggableId={String(project.id)}
                                             index={index}
                                         >
                                             {(provided) => (
                                                 <div
+                                                    onClick={() => handleClick(project.id)}
                                                     className={styles.card}
                                                     ref={provided.innerRef}
                                                     {...provided.draggableProps}

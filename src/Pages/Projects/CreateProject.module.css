@@ -1,0 +1,102 @@
+.wrapper {
+  max-width: 500px;
+  margin: 40px auto;
+  background: #e0e5ec;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 8px 8px 16px #bec4d0, -8px -8px 16px #ffffff;
+  font-family: 'Segoe UI', sans-serif;
+}
+.idandName {
+  display: flex;
+  gap: 20px;
+}
+.dateandProg {
+  display: flex;
+  gap: 20px;
+}
+h2 {
+  text-align: center;
+  color: #333;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+input,
+textarea,
+select {
+  padding: 8px;
+  border-radius: 10px;
+  border: none;
+  background: #e0e5ec;
+  box-shadow: inset 5px 5px 10px #bec4d0, inset -5px -5px 10px #ffffff;
+  color: #333;
+  width: 98%;
+  transition: box-shadow 0.2s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  box-shadow: inset 3px 3px 6px #bec4d0, inset -3px -3px 6px #ffffff;
+}
+
+select {
+  appearance: none;
+  background-image: url('data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2010%206%22%20xmlns%3D%22http://www.w3.org/2000/svg%22%3E%3Cpath%20d%3D%22M1%201L5%205L9%201%22%20stroke%3D%22%23333%22%20stroke-width%3D%222%22/%3E%3C/svg%3E');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 10px 6px;
+}
+
+textarea {
+  resize: none;
+  min-height: 100px;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .wrapper {
+    max-width: 90%;
+    margin: 30px auto;
+    padding: 25px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .wrapper {
+    padding: 20px;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  input,
+  textarea,
+  select {
+    font-size: 0.9rem;
+  }
+}

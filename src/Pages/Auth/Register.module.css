@@ -1,7 +1,7 @@
 .wrapper {
   font-family: 'Segoe UI', sans-serif;
   background: #e0e5ec;
-  min-height: 100vh;
+  min-height: 79vh;
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -90,12 +90,13 @@
 }
 
 .form input {
-  padding: 0.8rem 1rem;
+  padding: 1rem;
   border-radius: 12px;
+  width: 94%;
   border: none;
   background: #e0e5ec;
   box-shadow: inset 5px 5px 10px #bec4d0, inset -5px -5px 10px #ffffff;
-  font-size: 1rem;
+  /* font-size: 1rem; */
   color: #333;
 }
 
@@ -105,4 +106,10 @@
 }
 .visualPlaceholder {
   display: none;
+}
+.error {
+  color: #ff4b4b;
+  font-size: 0.85rem;
+  margin-bottom: 8px;
+  margin-left: 4px;
 }

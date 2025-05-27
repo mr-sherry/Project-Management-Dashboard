@@ -1,7 +1,7 @@
 .wrapper {
   font-family: 'Segoe UI', sans-serif;
   background: #e0e5ec;
-  min-height: 100vh;
+  min-height: 79vh;
   display: flex;
   flex-direction: column;
   padding: 20px;

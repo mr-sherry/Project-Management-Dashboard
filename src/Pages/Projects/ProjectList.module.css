@@ -58,6 +58,8 @@
   /* margin: 0.3rem 0; */
   font-size: 0.95rem;
   color: #555;
+  word-wrap: break-word;
+  width: 100%;
 }
 .card:active {
   opacity: 0.9;

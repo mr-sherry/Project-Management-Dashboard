@@ -4,10 +4,13 @@ import Button from '../../Components/Button';
 import Lottie from "lottie-react";
 import backgroundAnimation from '../../assests/background.json';
 import circleAnimation from '../../assests/landing-circle.json';
-import Header from '../../Components/Header';
+import { useUser } from "../../context/UserContext";
+import { NavLink } from "react-router-dom";
 
 const Landing = () => {
+    const { loggedUser } = useUser()
     const lottieRef = useRef();
+
 
     useEffect(() => {
         if (lottieRef.current) {
@@ -27,10 +30,24 @@ const Landing = () => {
 
             <main className={styles.hero}>
                 <div className={styles.textSection}>
-                    <h1>Manage projects. <br />Track progress. <br />Deliver results.</h1>
-                    <Button>
-                        Get Started
-                    </Button>
+                    <h1>Manage projects. <h1 style={{ color: '#cc3d3d' }}>Track progress.</h1>Deliver results.</h1>
+                    <div>
+                        {loggedUser ?
+                            <Button>
+                                <NavLink className={styles.link} to={'/dashboard'}>
+                                    Dashboard
+                                </NavLink>
+                            </Button>
+                            :
+                            <Button>
+                                <NavLink className={styles.link} to={'/register'}>
+                                    Get Started
+
+                                </NavLink>
+                            </Button>
+
+                        }
+                    </div>
                 </div>
                 <div className={styles.visual}>
                     <Lottie

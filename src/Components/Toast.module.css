@@ -1,0 +1,54 @@
+.toast {
+  position: fixed;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #e0e5ec;
+  border-radius: 16px;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 8px 8px 16px #bec4d0, -8px -8px 16px #ffffff;
+  font-family: 'Segoe UI', sans-serif;
+  z-index: 999;
+  animation: fadeIn 0.4s ease-out;
+  min-width: 280px;
+}
+
+.icon {
+  background: #e0e5ec;
+  border-radius: 50%;
+  padding: 0.5rem;
+  font-size: 1.5rem;
+  box-shadow: inset 5px 5px 10px #bec4d0, inset -5px -5px 10px #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.message {
+  color: #2b2b2b;
+  font-weight: 500;
+  flex: 1;
+  text-align: left;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #666;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}

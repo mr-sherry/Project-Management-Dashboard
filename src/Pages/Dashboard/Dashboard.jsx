@@ -1,41 +1,85 @@
-import React from "react";
 import styles from "./dashboard.module.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
+import { useEffect, useState } from "react";
 
 const Dashboard = () => {
-    const { projectList, users } = useUser()
-    console.log("🚀 ~ Dashboard ~ projectList:", projectList)
+    const navigate = useNavigate()
+    const [findProject, setFindProject] = useState({
+        pending: [],
+        inProgress: [],
+        completed: [],
+    });
+    const { projectList, userId, loggedUser } = useUser();
+    console.log("🚀 ~ Dashboard ~ userId:", userId)
+    const [userData, setUserData] = useState({ userName: 'NAN' });
+    console.log("🚀 ~ Dashboard ~ userData:", userData)
+    // console.log("🚀 ~ Dashboard ~ userData:", userData)
+    console.log("🚀 ~ Dashboard ~ loggedUser:", loggedUser)
+    // console.log("🚀 ~ Dashboard ~ projectList:", projectList)
+
+
+    // const project = projectList.find((p) => p.userIds === userId);
+    // console.log("🚀 ~ Dashboard ~ project:", project)
+
+    // const allProjects = [
+    //     ...project.pending,
+    //     ...project.inProgress,
+    //     ...project.completed
+    // ];
+    // console.log("🚀 ~ Dashboard ~ allProjects:", allProjects)
+
+    useEffect(() => {
+
+        const projectsForUser = projectList.find(user => user.userIds === userId);
+
+        if (projectsForUser) {
+            setFindProject(projectsForUser);
+        }
+    }, [projectList, userId]);
+
+    useEffect(() => {
+        if (!loggedUser) {
+            alert('please login first')
+            navigate('/login')
+        } else {
+            setUserData(loggedUser)
+        }
+    }, [loggedUser, userId])
     return (
         <div className={styles.container}>
             <aside className={styles.sidebar}>
                 <div className={styles.profile}>
                     <img
-                        src="https://via.placeholder.com/60"
+                        src="https://cdn-icons-png.flaticon.com/512/6522/6522516.png"
                         alt="User"
                         className={styles.avatar}
                     />
-                    <h2>Project Manager</h2>
-                    <p>ID: PM-0001</p>
+                    <h2>{userData.userName}</h2>
+                    <p>ID: {userId}</p>
                 </div>
                 <nav className={styles.nav}>
                     <button className={styles.active}>Overview</button>
+                    <NavLink to={'/profile'}>
+
+                        <button>Profile</button>
+                    </NavLink>
                     <NavLink to={'/project-list'}>
 
                         <button>Projects</button>
                     </NavLink>
-                    <button>Tasks</button>
-                    <button>Team</button>
-                    <button>Reports</button>
+                    <NavLink to={'/create-project'}>
+
+                        <button>Add New Project</button>
+                    </NavLink>
                 </nav>
             </aside>
 
             <main className={styles.main}>
                 <section className={styles.overallData}>
-                    <div className={styles.card}>Active Projects <span>{projectList.inProgress.length}</span></div>
-                    <div className={styles.card}>Completed Projects <span>{projectList.completed.length}</span></div>
-                    <div className={styles.card}>Pending Projects <span>{projectList.pending.length}</span></div>
-                    <div className={styles.card}>Team Members <span>{users.length}</span></div>
+                    <div className={styles.card}>Active Projects <span>{findProject.inProgress.length}</span></div>
+                    <div className={styles.card}>Completed Projects <span>{findProject.completed.length}</span></div>
+                    <div className={styles.card}>Pending Projects <span>{findProject.pending.length}</span></div>
                 </section>
 
                 <section className={styles.charts}>
@@ -58,7 +102,7 @@ const Dashboard = () => {
                 </section>
 
                 <section className={styles.worksOverview}>
-                    <h3>Recent Projects</h3>
+                    <h3>Recent Completed Projects</h3>
                     <table className={styles.table}>
                         <thead>
                             <tr>
@@ -70,13 +114,15 @@ const Dashboard = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>PJ-001</td>
-                                <td>Website Redesign</td>
-                                <td>2025-04-01</td>
-                                <td>In Progress</td>
-                                <td>60%</td>
-                            </tr>
+                            {findProject.completed.map((project) => (
+                                <tr>
+                                    <td>{project.id}</td>
+                                    <td>{project.title}</td>
+                                    <td>{project.startDate}</td>
+                                    <td>{project.status}</td>
+                                    <td>{project.progress}</td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </section>

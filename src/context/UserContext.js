@@ -4,10 +4,19 @@ export const UserContext = createContext({
   users: [],
   loggedUser: null,
   projectList: {},
+  userId: '',
   login: (email, password) => {},
-  register: (username, password, email, cPassword) => {},
+  register: (username, userId, password, email, cPassword) => {},
   logout: () => {},
-  project: (id, title, description) => {},
+  addProject: (
+    userId,
+    id,
+    title,
+    description,
+    startDate,
+    status,
+    progress
+  ) => {},
   projectsSort: (projects) => {},
 });
 

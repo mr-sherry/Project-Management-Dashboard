@@ -1,5 +1,8 @@
 /* src/Components/Header.module.css */
-
+* {
+  padding: 0;
+  margin: 0;
+}
 .navbar {
   position: relative;
   z-index: 1;
@@ -8,7 +11,7 @@
   align-items: center;
   padding: 1.2rem 2rem;
   background: #e0e5ec;
-  border-radius: 20px;
+  /* border-radius: 20px; */
   box-shadow: 8px 8px 16px #bec4d0, -8px -8px 16px #ffffff;
 }
 
