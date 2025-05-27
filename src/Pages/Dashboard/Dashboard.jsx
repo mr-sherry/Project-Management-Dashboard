@@ -11,24 +11,7 @@ const Dashboard = () => {
         completed: [],
     });
     const { projectList, userId, loggedUser } = useUser();
-    console.log("🚀 ~ Dashboard ~ userId:", userId)
     const [userData, setUserData] = useState({ userName: 'NAN' });
-    console.log("🚀 ~ Dashboard ~ userData:", userData)
-    // console.log("🚀 ~ Dashboard ~ userData:", userData)
-    console.log("🚀 ~ Dashboard ~ loggedUser:", loggedUser)
-    // console.log("🚀 ~ Dashboard ~ projectList:", projectList)
-
-
-    // const project = projectList.find((p) => p.userIds === userId);
-    // console.log("🚀 ~ Dashboard ~ project:", project)
-
-    // const allProjects = [
-    //     ...project.pending,
-    //     ...project.inProgress,
-    //     ...project.completed
-    // ];
-    // console.log("🚀 ~ Dashboard ~ allProjects:", allProjects)
-
     useEffect(() => {
 
         const projectsForUser = projectList.find(user => user.userIds === userId);

@@ -21,7 +21,6 @@ const ProjectList = () => {
         }
     }, [])
 
-    // Navigate to ProjectDetails with correct path
     const handleClick = (projectId) => {
         navigate(`/project-details/${projectId}`);
     };

@@ -25,7 +25,6 @@ function App() {
   const [loggedUser, setLoggedUser] = useState(JSON.parse(localStorage.getItem('loggedUser')));
   const [userId, setUserId] = useState("user-001");
   const [restoreData, setRestoreData] = useState(false);
-  console.log("🚀 ~ App ~ restoreData:", restoreData)
   const [projectList, setProjectList] = useState([{
     userIds: "user-001",
     pending: [
@@ -35,7 +34,6 @@ function App() {
     completed: [
     ]
   }]);
-  console.log("🚀 ~ App ~ projectList:", projectList)
 
 
 

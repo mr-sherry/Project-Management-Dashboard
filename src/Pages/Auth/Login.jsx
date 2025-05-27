@@ -8,9 +8,7 @@ const Login = () => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [submitted, setSubmitted] = useState(false);
-    const { login, loggedUser, users, projectList } = useUser();
-    console.log("🚀 ~ Login ~ users:", users)
-    console.log("🚀 ~ Login ~ projectList:", ...projectList)
+    const { login, loggedUser } = useUser();
 
     const navigate = useNavigate()
 

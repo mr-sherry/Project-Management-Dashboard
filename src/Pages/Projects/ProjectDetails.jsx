@@ -8,23 +8,19 @@ const ProjectDetails = () => {
     const { projectList, userId } = useUser();
     const { projectId } = useParams();
 
-    // Find the current user's project data
     const userProjectData = projectList.find((p) => p.userIds === userId);
 
     if (!userProjectData) {
         return <div className={styles.wrapper}>No project data found for this user.</div>;
     }
 
-    // Merge all status arrays to search for the specific project
     const allProjects = [
         ...userProjectData.pending,
         ...userProjectData.inProgress,
         ...userProjectData.completed
     ];
 
-    // Match projectId (which is a string) with project id
     const findProject = allProjects.find((p) => String(p.id) === String(projectId));
-    console.log("🚀 ~ ProjectDetails ~ findProject:", findProject)
 
     if (!findProject) {
         return <div className={styles.wrapper}>Project not found.</div>;

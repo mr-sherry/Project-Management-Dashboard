@@ -14,7 +14,6 @@ const Register = () => {
     const [isRegister, setIsRegister] = useState(false);
 
     const { register, users } = useUser();
-    console.log("🚀 ~ Register ~ users:", users)
 
     const validate = () => {
         const newErrors = {};
