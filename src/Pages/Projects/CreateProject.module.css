@@ -1,5 +1,5 @@
 .wrapper {
-  max-width: 500px;
+  max-width: 600px;
   margin: 40px auto;
   background: #e0e5ec;
   padding: 30px;
@@ -7,14 +7,7 @@
   box-shadow: 8px 8px 16px #bec4d0, -8px -8px 16px #ffffff;
   font-family: 'Segoe UI', sans-serif;
 }
-.idandName {
-  display: flex;
-  gap: 20px;
-}
-.dateandProg {
-  display: flex;
-  gap: 20px;
-}
+
 h2 {
   text-align: center;
   color: #333;
@@ -28,23 +21,42 @@ h2 {
   gap: 20px;
 }
 
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.formGroupRow {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
 input,
 textarea,
 select {
-  padding: 8px;
+  padding: 10px;
   border-radius: 10px;
   border: none;
   background: #e0e5ec;
   box-shadow: inset 5px 5px 10px #bec4d0, inset -5px -5px 10px #ffffff;
   color: #333;
-  width: 98%;
   transition: box-shadow 0.2s ease;
+  font-size: 1rem;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
   box-shadow: inset 3px 3px 6px #bec4d0, inset -3px -3px 6px #ffffff;
+  outline: none;
+}
+
+textarea {
+  resize: none;
+  min-height: 100px;
 }
 
 select {
@@ -55,23 +67,21 @@ select {
   background-size: 10px 6px;
 }
 
-textarea {
-  resize: none;
-  min-height: 100px;
-}
-
 .error {
   color: red;
   font-weight: bold;
   text-align: center;
 }
 
-/* Responsive Styles */
+.buttonWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
-  .wrapper {
-    max-width: 90%;
-    margin: 30px auto;
-    padding: 25px;
+  .formGroupRow {
+    flex-direction: column;
   }
 
   h2 {

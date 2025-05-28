@@ -6,10 +6,10 @@ import Landing from './Pages/Landing/Landing.jsx'
 import Login from './Pages/Auth/Login.jsx'
 import Register from './Pages/Auth/Register.jsx'
 import Settings from './Pages/Settings/Settings.jsx'
-import UserManagement from './Pages/Users/UserManagement.jsx'
 import CreateProject from './Pages/Projects/CreateProject.jsx'
 import ProjectDetails from './Pages/Projects/ProjectDetails.jsx'
 import ProjectList from './Pages/Projects/ProjectList.jsx'
+import Profile from './Pages/Users/Profile.jsx'
 
 
 const routes = createBrowserRouter(
@@ -20,7 +20,7 @@ const routes = createBrowserRouter(
       <Route path='register' element={<Register />} />
       <Route path='dashboard' element={<Dashboard />} />
       <Route path='settings' element={<Settings />} />
-      <Route path='user-management' element={<UserManagement />} />
+      <Route path='profile' element={<Profile />} />
       <Route path='create-project' element={<CreateProject />} />
       <Route path='project-details/:projectId' element={<ProjectDetails />} />
       <Route path='project-list' element={<ProjectList />} />

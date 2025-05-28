@@ -11,14 +11,18 @@ const Dashboard = () => {
         completed: [],
     });
     const { projectList, userId, loggedUser } = useUser();
+    console.log("🚀 ~ Dashboard ~ projectList:", projectList)
     const [userData, setUserData] = useState({ userName: 'NAN' });
     useEffect(() => {
 
+
         const projectsForUser = projectList.find(user => user.userIds === userId);
+        console.log("🚀 ~ useEffect ~ projectList:", projectList)
 
         if (projectsForUser) {
             setFindProject(projectsForUser);
         }
+
     }, [projectList, userId]);
 
     useEffect(() => {

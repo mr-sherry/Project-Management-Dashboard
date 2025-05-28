@@ -7,25 +7,23 @@ import Header from "./Components/Header";
 function App() {
 
   useEffect(() => {
-    const projectData = localStorage.getItem('ProjectList');
+    // const projectData = localStorage.getItem('ProjectList');
     const userData = localStorage.getItem('users');
 
-    if (projectData) {
-      setProjectList(JSON.parse(projectData));
-    }
+    // if (projectData) {
+    //   setProjectList(JSON.parse(projectData));
+    // }
 
     if (userData) {
       setUsers(JSON.parse(userData));
     }
-
-
     setRestoreData(true);
   }, []);
   const [users, setUsers] = useState([]);
   const [loggedUser, setLoggedUser] = useState(JSON.parse(localStorage.getItem('loggedUser')));
   const [userId, setUserId] = useState("user-001");
   const [restoreData, setRestoreData] = useState(false);
-  const [projectList, setProjectList] = useState([{
+  const [projectList, setProjectList] = useState(JSON.parse(localStorage.getItem('ProjectList')) || [{
     userIds: "user-001",
     pending: [
     ],
@@ -49,18 +47,47 @@ function App() {
   }
 
 
-  const addProject = (userId, id, title, description, startDate, status, progress) => {
+  const addProject = (
+    userId,
+    {
+      id,
+      title,
+      description,
+      startDate,
+      deadline,
+      status,
+      progress,
+      githubLink,
+      designLink,
+      referenceLink,
+    }
+  ) => {
     setProjectList(prevList =>
       prevList.map(user =>
         user.userIds === userId
           ? {
             ...user,
-            [status]: [...user[status], { id, title, description, startDate, status, progress }]
+            [status]: [
+              ...user[status],
+              {
+                id,
+                title,
+                description,
+                startDate,
+                deadline,
+                status,
+                progress,
+                githubLink,
+                designLink,
+                referenceLink,
+              },
+            ],
           }
           : user
       )
     );
   };
+
 
 
   const projectsSort = (userId, updatedProjects) => {
@@ -96,7 +123,6 @@ function App() {
   const register = (username, userId, password, email, cPassword) => {
     setUsers(prev => ([...prev, { userName: username, userid: userId, password: password, email: email, cPassword: cPassword }]))
     newUser(userId);
-
   }
 
   const logout = () => {

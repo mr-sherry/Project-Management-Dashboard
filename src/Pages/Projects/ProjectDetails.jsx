@@ -21,6 +21,7 @@ const ProjectDetails = () => {
     ];
 
     const findProject = allProjects.find((p) => String(p.id) === String(projectId));
+    console.log("🚀 ~ ProjectDetails ~ findProject:", findProject)
 
     if (!findProject) {
         return <div className={styles.wrapper}>Project not found.</div>;
@@ -36,8 +37,7 @@ const ProjectDetails = () => {
         progress,
         githubLink,
         deadline,
-        team,
-        reference,
+        referenceLink,
         designLink,
         images = []
     } = findProject;
@@ -60,13 +60,10 @@ const ProjectDetails = () => {
                     <h3>Links</h3>
                     <p><strong>GitHub:</strong> {githubLink ? <a href={githubLink} target="_blank" rel="noopener noreferrer">{githubLink}</a> : "N/A"}</p>
                     <p><strong>Design:</strong> {designLink ? <a href={designLink} target="_blank" rel="noopener noreferrer">{designLink}</a> : "N/A"}</p>
-                    <p><strong>Reference:</strong> {reference || "N/A"}</p>
+                    <p><strong>Reference:</strong> {referenceLink ? <a href={referenceLink} target="_blank" rel="noopener noreferrer">{referenceLink}</a> : "N/A"}</p>
                 </div>
 
-                <div className={styles.detailBox}>
-                    <h3>Team Members</h3>
-                    <p>{team?.length ? team.join(", ") : "No members assigned."}</p>
-                </div>
+
 
                 {images.length > 0 && (
                     <div className={styles.detailBox}>
