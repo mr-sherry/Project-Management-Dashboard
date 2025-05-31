@@ -1,5 +1,8 @@
 import React from "react";
 import styles from "./Profile.module.css";
+import { NavLink } from "react-router-dom";
+import Button from '../../Components/Button';
+
 
 const Profile = () => {
     return (
@@ -19,6 +22,9 @@ const Profile = () => {
             {/* Main Content */}
             <div className={styles.content}>
                 <h1 className={styles.title}>Profile</h1>
+                <NavLink to={'/profile-setup'}>
+                    <Button>Edit Profile</Button>
+                </NavLink>
                 <p className={styles.subtitle}>I’m a creative web developer</p>
 
                 <div className={styles.sections}>

@@ -1,38 +1,20 @@
 import styles from "./dashboard.module.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useUser } from "../../context/UserContext";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const Dashboard = () => {
     const navigate = useNavigate()
-    const [findProject, setFindProject] = useState({
-        pending: [],
-        inProgress: [],
-        completed: [],
-    });
-    const { projectList, userId, loggedUser } = useUser();
-    console.log("🚀 ~ Dashboard ~ projectList:", projectList)
-    const [userData, setUserData] = useState({ userName: 'NAN' });
-    useEffect(() => {
 
+    const { loggedUser } = useUser();
 
-        const projectsForUser = projectList.find(user => user.userIds === userId);
-        console.log("🚀 ~ useEffect ~ projectList:", projectList)
-
-        if (projectsForUser) {
-            setFindProject(projectsForUser);
-        }
-
-    }, [projectList, userId]);
 
     useEffect(() => {
         if (!loggedUser) {
             alert('please login first')
             navigate('/login')
-        } else {
-            setUserData(loggedUser)
         }
-    }, [loggedUser, userId])
+    }, [loggedUser])
     return (
         <div className={styles.container}>
             <aside className={styles.sidebar}>
@@ -42,8 +24,8 @@ const Dashboard = () => {
                         alt="User"
                         className={styles.avatar}
                     />
-                    <h2>{userData.userName}</h2>
-                    <p>ID: {userId}</p>
+                    <h2>userName</h2>
+                    <p>ID: user-Id</p>
                 </div>
                 <nav className={styles.nav}>
                     <button className={styles.active}>Overview</button>
@@ -64,9 +46,9 @@ const Dashboard = () => {
 
             <main className={styles.main}>
                 <section className={styles.overallData}>
-                    <div className={styles.card}>Active Projects <span>{findProject.inProgress.length}</span></div>
-                    <div className={styles.card}>Completed Projects <span>{findProject.completed.length}</span></div>
-                    <div className={styles.card}>Pending Projects <span>{findProject.pending.length}</span></div>
+                    <div className={styles.card}>Active Projects <span>inProgress</span></div>
+                    <div className={styles.card}>Completed Projects <span>completed</span></div>
+                    <div className={styles.card}>Pending Projects <span>pending</span></div>
                 </section>
 
                 <section className={styles.charts}>
@@ -101,15 +83,15 @@ const Dashboard = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {findProject.completed.map((project) => (
-                                <tr>
-                                    <td>{project.id}</td>
-                                    <td>{project.title}</td>
-                                    <td>{project.startDate}</td>
-                                    <td>{project.status}</td>
-                                    <td>{project.progress}</td>
-                                </tr>
-                            ))}
+
+                            <tr>
+                                <td>id</td>
+                                <td>title</td>
+                                <td>startDate</td>
+                                <td>status</td>
+                                <td>progress</td>
+                            </tr>
+
                         </tbody>
                     </table>
                 </section>

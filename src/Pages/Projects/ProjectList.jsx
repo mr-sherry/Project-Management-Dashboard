@@ -5,7 +5,7 @@ import { useUser } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 
 const ProjectList = () => {
-    const { userId, projectList, projectsSort, loggedUser } = useUser();
+    const { loggedUser } = useUser();
     const navigate = useNavigate();
 
     const [projects, setProjects] = useState({
@@ -25,18 +25,6 @@ const ProjectList = () => {
         navigate(`/project-details/${projectId}`);
     };
 
-    useEffect(() => {
-        const currentUserProjects = projectList.find(user => user.userIds === userId);
-        if (currentUserProjects) {
-            setProjects({
-                userIds: currentUserProjects.userIds,
-                pending: currentUserProjects.pending,
-                inProgress: currentUserProjects.inProgress,
-                completed: currentUserProjects.completed
-            });
-        }
-    }, [projectList, userId]);
-
     const handleDragEnd = (result) => {
         const { source, destination } = result;
         if (!destination) return;
@@ -55,7 +43,6 @@ const ProjectList = () => {
         };
 
         setProjects(updatedProjects);
-        projectsSort(userId, updatedProjects);
     };
 
     const statusLabels = {

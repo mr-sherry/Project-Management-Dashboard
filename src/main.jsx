@@ -10,6 +10,7 @@ import CreateProject from './Pages/Projects/CreateProject.jsx'
 import ProjectDetails from './Pages/Projects/ProjectDetails.jsx'
 import ProjectList from './Pages/Projects/ProjectList.jsx'
 import Profile from './Pages/Users/Profile.jsx'
+import ProfileSetup from './Pages/ProfileSetup/ProfileSetup.jsx'
 
 
 const routes = createBrowserRouter(
@@ -24,6 +25,7 @@ const routes = createBrowserRouter(
       <Route path='create-project' element={<CreateProject />} />
       <Route path='project-details/:projectId' element={<ProjectDetails />} />
       <Route path='project-list' element={<ProjectList />} />
+      <Route path='profile-setup' element={<ProfileSetup />} />
     </Route>
   )
 );

@@ -1,35 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Register.module.css";
 import Button from "../../Components/Button";
-import { useUser } from "../../context/UserContext";
+// import { useUser } from "../../context/UserContext";
 import Toast from "../../Components/Toast";
-
+import { useFirebase } from '../../context/firebase'
+import { useUser } from "../../context/UserContext";
+import { useNavigate } from "react-router-dom";
 const Register = () => {
-    const [name, setName] = useState('');
-    const [userId, setUserId] = useState('');
+    const firebase = useFirebase();
+    console.log("🚀 ~ Register ~ firebase:", firebase)
+
+    const { loggedUser } = useUser()
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [cPassword, setCPassword] = useState('');
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState(null);
     const [isRegister, setIsRegister] = useState(false);
+    const navigate = useNavigate()
 
-    const { register, users } = useUser();
+
+    useEffect(() => {
+        if (loggedUser) {
+            navigate('/')
+        }
+    }, [])
+
 
     const validate = () => {
         const newErrors = {};
-
-        if (!name.trim()) {
-            newErrors.name = "Name is required";
-        } else if (users.some(user => user.userName === name)) {
-            newErrors.name = "Username already taken";
-        }
 
         if (!email.trim()) {
             newErrors.email = "Email is required";
         } else if (!/\S+@\S+\.\S+/.test(email)) {
             newErrors.email = "Invalid email format";
-        } else if (users.some(user => user.email === email)) {
-            newErrors.email = "Email already registered";
         }
 
         const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
@@ -48,26 +52,31 @@ const Register = () => {
 
         return newErrors;
     };
+    console.log("🚀 ~ satate ~ erroes:", errors)
 
+    useEffect(() => {
+        setErrors(validate())
 
+    }, [email, password, cPassword])
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log('helo starting');
 
-        const formErrors = validate();
-        if (Object.keys(formErrors).length > 0) {
-            setErrors(formErrors);
+        const validationErrors = validate();
+        if (Object.keys(validationErrors).length > 0) {
+            setErrors(validationErrors);
             return;
         }
+        else {
+            const result = await firebase.signupUserWithEmailAndPassword(email, password);
+            console.log("signup complete", result)
+            setCPassword('');
+            setEmail('');
+            setPassword('');
+            setIsRegister(true);
+        }
 
-        register(name, userId, password, email, cPassword);
-        setUserId('')
-        setCPassword('');
-        setEmail('');
-        setName('');
-        setPassword('');
-        setIsRegister(true);
-        setErrors({});
     };
 
 
@@ -83,22 +92,7 @@ const Register = () => {
                                 onClose={() => setIsRegister(false)}
                             />
                         )}
-
-                        <div style={{ display: "flex", gap: '10px' }}>
-                            <input
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
-                                type="text"
-                                placeholder="Full Name"
-                            />
-                            <input
-                                value={userId}
-                                onChange={(e) => setUserId((e.target.value).toLowerCase())}
-                                type="text"
-                                placeholder="User Id"
-                            />
-                        </div>
-                        {errors.name && <p className={styles.error}>{errors.name}</p>}
+                        {errors?.email && <p className={styles.error}>{errors.email}</p>}
 
                         <input
                             value={email}
@@ -106,7 +100,8 @@ const Register = () => {
                             type="email"
                             placeholder="Email Address"
                         />
-                        {errors.email && <p className={styles.error}>{errors.email}</p>}
+                        {errors?.password && <p className={styles.error}>{errors.password}</p>}
+
 
                         <input
                             value={password}
@@ -114,7 +109,8 @@ const Register = () => {
                             type="password"
                             placeholder="Password"
                         />
-                        {errors.password && <p className={styles.error}>{errors.password}</p>}
+                        {errors?.cPassword && <p className={styles.error}>{errors.cPassword}</p>}
+
 
                         <input
                             value={cPassword}
@@ -122,7 +118,7 @@ const Register = () => {
                             type="password"
                             placeholder="Confirm Password"
                         />
-                        {errors.cPassword && <p className={styles.error}>{errors.cPassword}</p>}
+
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
 
                             <Button type="submit">Register</Button>
