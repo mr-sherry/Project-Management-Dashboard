@@ -1,31 +1,12 @@
 import React from "react";
 import styles from "./ProjectDetails.module.css";
 import Button from "../../Components/Button";
-import { useUser } from "../../context/UserContext";
 import { useParams } from "react-router-dom";
 
 const ProjectDetails = () => {
-    const { projectList, userId } = useUser();
     const { projectId } = useParams();
 
-    const userProjectData = projectList.find((p) => p.userIds === userId);
 
-    if (!userProjectData) {
-        return <div className={styles.wrapper}>No project data found for this user.</div>;
-    }
-
-    const allProjects = [
-        ...userProjectData.pending,
-        ...userProjectData.inProgress,
-        ...userProjectData.completed
-    ];
-
-    const findProject = allProjects.find((p) => String(p.id) === String(projectId));
-    console.log("🚀 ~ ProjectDetails ~ findProject:", findProject)
-
-    if (!findProject) {
-        return <div className={styles.wrapper}>Project not found.</div>;
-    }
 
 
     const {

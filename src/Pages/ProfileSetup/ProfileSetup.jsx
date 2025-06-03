@@ -1,17 +1,59 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./ProfileSetup.module.css";
-import { useUser } from "../../context/UserContext";
 import Button from '../../Components/Button';
+import { useFirebase } from "../../context/firebase";
+import { useNavigate } from "react-router-dom";
 
 
 const ProfileSetup = () => {
-    const { userId, saveProfile, profiles } = useUser();
+
+    const firebase = useFirebase();
+    const [email, setEmail] = useState('');
+    const [userId1, setUserId] = useState('');
+    console.log("🚀 ~ ProfileSetup ~ userId:", userId1)
+    const [userProfile, setUserProfile] = useState(null)
+    console.log("🚀 ~ ProfileSetup ~ userProfile:", userProfile)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (firebase.user) {
+            const userEmail = firebase.user.email;
+            const userId = firebase.user.uid;
+            setEmail(userEmail);
+            setUserId(userId);
+            setProfileData((prev) => ({
+                ...prev,
+                userId: userId1,
+                email: userEmail
+            }));
+
+            firebase.getUserProfile().then(userProfiles => {
+                const matchedProfile = userProfiles.docs.find((profile) => {
+                    return profile.data().userId === firebase.user.uid
+                })
+                console.log("🚀 ~ matchedProfile ~ matchedProfile:", matchedProfile)
+                setUserProfile(matchedProfile.data())
+            }
+            )
+
+        } else {
+            navigate('/login')
+        }
+    }, [firebase.user]);
+
+    useEffect(() => {
+        if (userProfile) {
+            setProfileData(userProfile)
+        }
+
+    }, [userProfile])
 
     const [profileData, setProfileData] = useState({
+        userId: userId1,
         name: "",
         age: "",
         location: "",
-        email: "",
+        email: email,
         phone: "",
         website: "",
         github: "",
@@ -20,12 +62,8 @@ const ProfileSetup = () => {
         bio: "",
         about: "",
     });
+    console.log("🚀 ~ ProfileSetup ~ profileData:", profileData)
 
-    useEffect(() => {
-        if (userId && profiles[userId]) {
-            setProfileData(profiles[userId]);
-        }
-    }, [userId, profiles]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -34,24 +72,43 @@ const ProfileSetup = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        saveProfile(userId, profileData);
-        alert("Profile saved successfully!");
-    };
+
+        if (userProfile) {
+            alert("Profile updated successfully!");
+            firebase.updateUserProfile(profileData.userId,
+                profileData.name,
+                profileData.age,
+                profileData.location,
+                profileData.email,
+                profileData.phone,
+                profileData.website,
+                profileData.github,
+                profileData.linkedin,
+                profileData.tagline,
+                profileData.bio,
+                profileData.about)
+        } else {
+            alert("Profile saved successfully!");
+            firebase.handleCreateNewProfile(
+                profileData.userId,
+                profileData.name,
+                profileData.age,
+                profileData.location,
+                profileData.email,
+                profileData.phone,
+                profileData.website,
+                profileData.github,
+                profileData.linkedin,
+                profileData.tagline,
+                profileData.bio,
+                profileData.about)
+        };
+    }
 
     return (
         <div className={styles.container}>
             <form onSubmit={handleSubmit} className={styles.form}>
                 <h1>Profile Setup</h1>
-
-                <label>
-                    User ID:
-                    <input
-                        name="userId"
-                        value={userId}
-                        disabled
-                        placeholder="User ID"
-                    />
-                </label>
 
                 <label>
                     Name:
@@ -93,7 +150,7 @@ const ProfileSetup = () => {
                         name="email"
                         type="email"
                         value={profileData.email}
-                        onChange={handleChange}
+                        disabled
                         placeholder="Email address"
                         required
                     />

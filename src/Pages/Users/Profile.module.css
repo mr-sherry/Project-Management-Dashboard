@@ -40,6 +40,7 @@
 .card p {
   font-size: 0.95rem;
   margin-bottom: 20px;
+  word-wrap: break-word;
 }
 
 .socialIcons a {
@@ -90,7 +91,9 @@
 .details p,
 .about p {
   margin: 8px 0;
+  width: 100%;
   font-size: 0.95rem;
+  word-wrap: break-word;
   color: #555;
 }
 

@@ -4,11 +4,11 @@ import Button from '../../Components/Button';
 import Lottie from "lottie-react";
 import backgroundAnimation from '../../assests/background.json';
 import circleAnimation from '../../assests/landing-circle.json';
-import { useUser } from "../../context/UserContext";
+import { useFirebase } from '../../context/firebase'
 import { NavLink } from "react-router-dom";
 
 const Landing = () => {
-    const { loggedUser } = useUser()
+    const firebase = useFirebase()
     const lottieRef = useRef();
 
 
@@ -32,7 +32,7 @@ const Landing = () => {
                 <div className={styles.textSection}>
                     <h1>Manage projects. <h1 style={{ color: '#cc3d3d' }}>Track progress.</h1>Deliver results.</h1>
                     <div>
-                        {loggedUser ?
+                        {firebase.user ?
                             <Button>
                                 <NavLink className={styles.link} to={'/dashboard'}>
                                     Dashboard

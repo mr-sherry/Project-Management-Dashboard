@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Register.module.css";
 import Button from "../../Components/Button";
-// import { useUser } from "../../context/UserContext";
 import Toast from "../../Components/Toast";
 import { useFirebase } from '../../context/firebase'
-import { useUser } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
 const Register = () => {
     const firebase = useFirebase();
     console.log("🚀 ~ Register ~ firebase:", firebase)
 
-    const { loggedUser } = useUser()
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -21,10 +18,10 @@ const Register = () => {
 
 
     useEffect(() => {
-        if (loggedUser) {
+        if (firebase.user) {
             navigate('/')
         }
-    }, [])
+    }, [firebase.user])
 
 
     const validate = () => {

@@ -1,20 +1,19 @@
 import styles from "./dashboard.module.css";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useUser } from "../../context/UserContext";
 import { useEffect } from "react";
+import { useFirebase } from '../../context/firebase'
 
 const Dashboard = () => {
     const navigate = useNavigate()
-
-    const { loggedUser } = useUser();
+    const firebase = useFirebase()
 
 
     useEffect(() => {
-        if (!loggedUser) {
+        if (!firebase.user) {
             alert('please login first')
             navigate('/login')
         }
-    }, [loggedUser])
+    }, [firebase.user])
     return (
         <div className={styles.container}>
             <aside className={styles.sidebar}>

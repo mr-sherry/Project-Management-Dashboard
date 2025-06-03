@@ -3,12 +3,12 @@ import React from "react";
 import styles from "./Header.module.css";
 import Button from "./Button";
 import { NavLink } from "react-router-dom";
-import { useUser } from "../context/UserContext";
+import { useFirebase } from "../context/firebase";
 
 const Header = () => {
-    const { loggedUser, logout } = useUser();
+    const firebase = useFirebase();
     const handleLogout = () => {
-        logout()
+        firebase.logoutUser();
     }
     return (
         <header className={styles.navbar}>
@@ -19,12 +19,13 @@ const Header = () => {
                 </NavLink>
                 <nav className={styles.navLinks}>
                     <NavLink to="/">Home</NavLink>
-                    {loggedUser && <NavLink to="/project-list">Projects</NavLink>}
-                    {loggedUser && <NavLink to={'/dashboard'}>Dashboard</NavLink>}
+                    {firebase.user && <NavLink to="/profile-setup">Profile Setup</NavLink>}
+                    {firebase.user && <NavLink to="/project-list">Projects</NavLink>}
+                    {firebase.user && <NavLink to={'/dashboard'}>Dashboard</NavLink>}
                 </nav>
             </div>
             <div className={styles.authButtons}>
-                {loggedUser ?
+                {firebase.user ?
                     (<NavLink to="/login">
                         <Button onClick={handleLogout}>logout</Button>
                     </NavLink>)

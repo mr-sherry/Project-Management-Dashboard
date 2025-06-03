@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import styles from "./CreateProject.module.css";
 import Button from "../../Components/Button";
-import { useUser } from "../../context/UserContext";
+import { useFirebase } from "../../context/firebase";
 
 const CreateProject = () => {
+
+    const firebase = useFirebase();
+
     const [id, setId] = useState("");
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -16,42 +19,47 @@ const CreateProject = () => {
     const [referenceLink, setReferenceLink] = useState("");
     const [error, setError] = useState("");
 
-    const { addProject, userId } = useUser();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!id || !title || !description || !startDate || !deadline || !status || progress === "") {
             setError("All fields are required.");
             return;
+        } else {
+            const projectData = {
+                id,
+                title,
+                description,
+                startDate,
+                deadline,
+                status,
+                progress: parseInt(progress),
+                githubLink,
+                designLink,
+                referenceLink,
+            };
+            const addingProject = await firebase.addNewProject(firebase.user.uid, projectData)
+            if (addingProject.success) {
+                alert('project added successfully')
+            } else {
+                alert('error')
+            }
+
+            setId("");
+            setTitle("");
+            setDescription("");
+            setStartDate("");
+            setDeadline("");
+            setStatus("pending");
+            setProgress(0);
+            setGithubLink("");
+            setDesignLink("");
+            setReferenceLink("");
+            setError("");
         }
 
-        const projectData = {
-            id,
-            title,
-            description,
-            startDate,
-            deadline,
-            status,
-            progress: parseInt(progress),
-            githubLink,
-            designLink,
-            referenceLink,
-        };
 
-        addProject(userId, projectData);
-
-        setId("");
-        setTitle("");
-        setDescription("");
-        setStartDate("");
-        setDeadline("");
-        setStatus("pending");
-        setProgress(0);
-        setGithubLink("");
-        setDesignLink("");
-        setReferenceLink("");
-        setError("");
     };
 
     return (
@@ -66,7 +74,7 @@ const CreateProject = () => {
                         <label htmlFor="projectId">Project ID</label>
                         <input
                             id="projectId"
-                            type="text"
+                            type="number"
                             value={id}
                             onChange={(e) => setId(e.target.value)}
                             placeholder="Enter Project ID"

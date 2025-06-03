@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Login.module.css";
 import Button from "../../Components/Button";
-import { NavLink, useNavigate } from "react-router-dom";
-import { useUser } from "../../context/UserContext";
+import { useNavigate } from "react-router-dom";
 import { useFirebase } from "../../context/firebase";
 
 const Login = () => {
@@ -10,16 +9,14 @@ const Login = () => {
     const [password, setPassword] = useState();
     const [user, setUser] = useState({});
     console.log("🚀 ~ Login ~ user:", user.email)
-    const { login, loggedUser } = useUser();
-    console.log("🚀 ~ Login ~ loggedUser:", loggedUser)
     const firebase = useFirebase();
 
     const navigate = useNavigate()
     useEffect(() => {
-        if (loggedUser) {
+        if (firebase.user) {
             navigate('/')
         }
-    }, [loggedUser])
+    }, [firebase.user])
 
 
     const handleSubmit = async (e) => {
@@ -32,13 +29,14 @@ const Login = () => {
 
         if (result.success) {
             console.log("✅ Login successful");
-            login(email, password)
             setEmail('');
             setPassword('');
             alert('login successfull');
             // navigate('/dashboard');
         } else {
             alert('invalid credentials')
+            setPassword('');
+
         }
 
     }
