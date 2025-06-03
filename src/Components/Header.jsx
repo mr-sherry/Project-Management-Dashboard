@@ -19,9 +19,9 @@ const Header = () => {
                 </NavLink>
                 <nav className={styles.navLinks}>
                     <NavLink to="/">Home</NavLink>
+                    {firebase.user && <NavLink to={'/dashboard'}>Dashboard</NavLink>}
                     {firebase.user && <NavLink to="/profile">Profile</NavLink>}
                     {firebase.user && <NavLink to="/project-list">Projects</NavLink>}
-                    {firebase.user && <NavLink to={'/dashboard'}>Dashboard</NavLink>}
                 </nav>
             </div>
             <div className={styles.authButtons}>
