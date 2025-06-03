@@ -28,9 +28,9 @@ const Dashboard = () => {
                 </div>
                 <nav className={styles.nav}>
                     <button className={styles.active}>Overview</button>
-                    <NavLink to={'/profile'}>
+                    <NavLink to={'/profile-setup'}>
 
-                        <button>Profile</button>
+                        <button>Profile Setup</button>
                     </NavLink>
                     <NavLink to={'/project-list'}>
 
