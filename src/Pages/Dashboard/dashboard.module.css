@@ -127,7 +127,7 @@
 .donutChart {
   margin-top: 1rem;
   background: var(--bg);
-  height: 180px;
+  height: 400px;
   display: flex;
   align-items: center;
   justify-content: center;

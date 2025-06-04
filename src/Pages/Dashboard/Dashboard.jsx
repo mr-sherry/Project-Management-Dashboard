@@ -1,17 +1,66 @@
 import styles from "./dashboard.module.css";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useFirebase } from '../../context/firebase'
+import Chart from "../../Components/Chart";
+import PieChart1 from "../../Components/PieChart1";
 
 const Dashboard = () => {
-    const navigate = useNavigate()
-    const firebase = useFirebase()
+    const navigate = useNavigate();
+    const firebase = useFirebase();
+    // console.log("🚀 ~ Dashboard ~ firebase:", firebase.user)
+    const [projects, setProjects] = useState({
+        inProgress: [],
+        completed: [],
+        pending: []
+    })
+    console.log("🚀 ~ Dashboard ~ projects:", projects)
+    const [userProfile, setUserProfile] = useState([])
+    // console.log("🚀 ~ Dashboard ~ userProfile:", userProfile)
+
+    // console.log("🚀 ~ Dashboard ~ projects:", projects)
 
 
     useEffect(() => {
         if (!firebase.user) {
             alert('please login first')
             navigate('/login')
+        } else {
+            firebase.getUserProjects().then((userProjects) => {
+                const matchedProjects = userProjects.docs
+                    .filter((doc) => doc.data().userId === firebase.user.uid)
+                    .map((doc) => ({ id: doc.id, ...doc.data() }));
+
+                // console.log("🚀 ~ firebase.getUserProjects ~ matchedProjects:", matchedProjects)
+
+                const grouped = {
+                    pending: [],
+                    inProgress: [],
+                    completed: []
+                };
+
+                matchedProjects.forEach((project) => {
+                    const status = project.status;
+                    if (grouped[status]) {
+                        grouped[status].push(project);
+                    }
+                });
+
+                setProjects(grouped);
+
+            })
+
+
+            ///////////////////////////////profile/////////////////////////////////////////////
+            firebase.getUserProfile().then(userProfiles => {
+                const matchedProfile = userProfiles.docs.find((profile) => {
+                    return profile.data().userId === firebase.user.uid
+                })
+                // console.log("🚀 ~ matchedProfile ~ matchedProfile:", matchedProfile)
+                setUserProfile(matchedProfile.data())
+            }
+
+            )
         }
     }, [firebase.user])
     return (
@@ -23,8 +72,8 @@ const Dashboard = () => {
                         alt="User"
                         className={styles.avatar}
                     />
-                    <h2>userName</h2>
-                    <p>ID: user-Id</p>
+                    <h2>{userProfile.name}</h2>
+                    {/* <p>ID:{userProfile.userId}</p> */}
                 </div>
                 <nav className={styles.nav}>
                     <button className={styles.active}>Overview</button>
@@ -45,26 +94,23 @@ const Dashboard = () => {
 
             <main className={styles.main}>
                 <section className={styles.overallData}>
-                    <div className={styles.card}>Active Projects <span>inProgress</span></div>
-                    <div className={styles.card}>Completed Projects <span>completed</span></div>
-                    <div className={styles.card}>Pending Projects <span>pending</span></div>
+                    <div className={styles.card}>Active Projects <span>{projects.inProgress.length}</span></div>
+                    <div className={styles.card}>Completed Projects <span>{projects.completed.length}</span></div>
+                    <div className={styles.card}>Pending Projects <span>{projects.pending.length}</span></div>
                 </section>
 
                 <section className={styles.charts}>
                     <div className={styles.fanIncrease}>
                         <h3>Task Completion Trend</h3>
                         {/* Replace with actual chart */}
-                        <div className={styles.barChart}>[Bar Chart]</div>
+                        <div className={styles.barChart}>{<Chart />}</div>
                     </div>
 
                     <div className={styles.incomeStats}>
-                        <h3>Project Allocation</h3>
-                        <div className={styles.donutChart}>75%</div>
+                        <h3>Project Progress</h3>
+                        <div className={styles.donutChart}>{<PieChart1 />}</div>
                         <div className={styles.incomeInfo}>
-                            <p>Development: 40%</p>
-                            <p>Design: 25%</p>
-                            <p>QA: 10%</p>
-                            <p>Other: 25%</p>
+
                         </div>
                     </div>
                 </section>
@@ -82,14 +128,15 @@ const Dashboard = () => {
                             </tr>
                         </thead>
                         <tbody>
-
-                            <tr>
-                                <td>id</td>
-                                <td>title</td>
-                                <td>startDate</td>
-                                <td>status</td>
-                                <td>progress</td>
-                            </tr>
+                            {projects.completed.map((project) => (
+                                <tr key={project.projectId}>
+                                    <td>{project.projectId}</td>
+                                    <td>{project.title}</td>
+                                    <td>{project.startDate}</td>
+                                    <td>{project.status}</td>
+                                    <td>{project.progress}</td>
+                                </tr>
+                            ))}
 
                         </tbody>
                     </table>

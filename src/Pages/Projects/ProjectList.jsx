@@ -113,7 +113,7 @@ const ProjectList = () => {
                                         >
                                             {(provided) => (
                                                 <div
-                                                    onClick={() => handleClick(project.id)}
+                                                    onClick={() => handleClick(project.projectId)}
                                                     className={styles.card}
                                                     ref={provided.innerRef}
                                                     {...provided.draggableProps}

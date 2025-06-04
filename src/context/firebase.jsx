@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
-import { getFirestore, collection, addDoc, doc, getDocs, updateDoc, query, where } from 'firebase/firestore'
+import { getFirestore, collection, addDoc, doc, getDocs, updateDoc, query, where, deleteDoc } from 'firebase/firestore'
 
 export const FirebaseContext = createContext(null);
 
@@ -130,6 +130,30 @@ export const FirebaseProvider = (props) => {
     };
 
 
+    const deleteProjectByUserIdAndProjectId = async (userId, projectId) => {
+        try {
+            const q = query(
+                collection(firestore, "userProjects"),
+                where("userId", "==", userId),
+                where("projectId", "==", projectId)
+            );
+
+            const snapshot = await getDocs(q);
+
+            if (snapshot.empty) {
+                throw new Error("❌ Project not found.");
+            }
+
+            const docId = snapshot.docs[0].id; // Firestore document ID
+            await deleteDoc(doc(firestore, "userProjects", docId));
+            console.log("✅ Project deleted successfully.");
+        } catch (error) {
+            console.error("❌ Error deleting project:", error.message);
+            throw error;
+        }
+    };
+
+
 
 
 
@@ -155,5 +179,5 @@ export const FirebaseProvider = (props) => {
     };
 
 
-    return <FirebaseContext.Provider value={{ signupUserWithEmailAndPassword, signinUserWithEmailAndPass, handleCreateNewProfile, updateUserProfile, getUserProfile, logoutUser, addNewProject, getUserProjects, updateProjectByUserIdAndProjectId, user }}>{props.children}</FirebaseContext.Provider>
+    return <FirebaseContext.Provider value={{ signupUserWithEmailAndPassword, signinUserWithEmailAndPass, handleCreateNewProfile, updateUserProfile, getUserProfile, logoutUser, addNewProject, getUserProjects, updateProjectByUserIdAndProjectId, deleteProjectByUserIdAndProjectId, user }}>{props.children}</FirebaseContext.Provider>
 };
